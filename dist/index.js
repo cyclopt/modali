@@ -201,14 +201,16 @@ var useModali = exports.useModali = function useModali(options) {
   isModalVisibleRef.current = isModalVisible;
   var timeoutHack = void 0;
 
-  function toggle() {
+  var toggle = (0, _react.useCallback)(function () {
     timeoutHack = setTimeout(function () {
       setIsModalVisible(!isModalVisibleRef.current);
       clearTimeout(timeoutHack);
     }, 10);
-    setIsShown(!isShown);
+    setIsShown(function (isShown) {
+      return !isShown;
+    });
     setHasToggledBefore(true);
-  }
+  }, []);
 
   function handleKeyDown(event) {
     if (event.keyCode !== 27 || options && options.keyboardClose === false) return;
